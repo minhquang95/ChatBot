@@ -110,24 +110,18 @@ echo ' {
 }';
 	   
 }else if($gioitinh == 'female'){
- echo'{
- "messages": [
+echo ' {
+  "messages": [
     {
-      "attachment":{
-        "type":"template",
-        "payload":{
-          "template_type":"generic",
-          "elements":[
-            {
-              "title":"Đang thả câu...",
-              "subtitle":"Đợi xíu BOT đang tìm một cá nam cho bạn (👱)"
-            }
-          ]
+      "attachment": {
+        "type": "image",
+        "payload": {
+          "url": "https://i.imgur.com/FC29giq.jpg"
         }
       }
     }
   ]
-}  ';
+}';
 
 }else{
   echo'{
