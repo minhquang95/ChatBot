@@ -184,19 +184,13 @@ if (!trangthai($ID)){// nếu chưa chát
 if (!hangcho($ID)) { // nếu chưa trong hàng chờ
 ketnoi($ID,$gioitinh);
 }else{
-echo'{
- "messages": [
+echo ' {
+  "messages": [
     {
-      "attachment":{
-        "type":"template",
-        "payload":{
-          "template_type":"generic",
-          "elements":[
-            {
-              "title":"Đang thả câu...",
-              "subtitle":"Chưa có cá nào dính thính đâu. Bạn chờ chút nhé! "
-            }
-          ]
+      "attachment": {
+        "type": "image",
+        "payload": {
+          "url": "https://i.imgur.com/FC29giq.jpg"
         }
       }
     }
@@ -205,19 +199,13 @@ echo'{
 }
 }else{
 // khi đang chát ! giải quyết sau !!
-echo'{
- "messages": [
+echo ' {
+  "messages": [
     {
-      "attachment":{
-        "type":"template",
-        "payload":{
-          "template_type":"generic",
-          "elements":[
-            {
-              "title":"Cảnh báo",
-              "subtitle":"Bạn đang được kết nối với cá rồi ! Hãy gõ \'End\' để thoát"
-            }
-          ]
+      "attachment": {
+        "type": "image",
+        "payload": {
+          "url": "https://i.imgur.com/FC29giq.jpg"
         }
       }
     }
