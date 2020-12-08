@@ -96,17 +96,17 @@ function ketnoi($userid,$gioitinh) { //tìm người chát
   if ($partner == 0) { // nếu người không có ai trong hàng chờ
   mysqli_query($conn, "UPDATE `users` SET `hangcho` = 1 WHERE `ID` = $userid"); 
     if($gioitinh == 'male'){
-     echo '[
+[
   {"text": "Tin nhắn 3"}, 
   {
       "attachment": {
         "type": "image",
         "payload": {
-          "url": "https://i.imgur.com/FC29giq.jpg"
+          "url": "https://fchat.vn/assets/images/landing/bot/icons8-eiffel-tower-96.png"
         }
       }
     }
-]';
+]
 	   
 }else if($gioitinh == 'female'){
  echo'{
