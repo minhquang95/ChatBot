@@ -7,15 +7,14 @@ require_once 'config.php'; //lấy thông tin từ config
 $conn = mysqli_connect($DBHOST, $DBUSER, $DBPW, $DBNAME); // kết nối data
 ////// Hàm Gửi JSON //////////
 
-function request($userid,$jsondata) { 
+function request($userid,$data) { 
   global $TOKEN;
   global $BOT_ID;
   global $BLOCK_NAME;
-  $url = "https://ahachat.com/api/bots/$BOT_ID/users/$userid/send?ahachat_token=$TOKEN&ahachat_block_name=$BLOCK_NAME";
+    $url = "https://fchat.vn/api/send?user_id=$userid&block_id=$BLOCK_NAME&token=$TOKEN&$data";
   $ch = curl_init($url);
-  curl_setopt($ch, CURLOPT_POST, 1);
-  curl_setopt($ch, CURLOPT_POSTFIELDS, $jsondata);
-  curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+  curl_setopt($ch,CURLOPT_URL,$url);
+  curl_setopt($ch, CURLOPT_HEADER, 0);
   curl_exec($ch);
   $errorChat = '{
      "messages": [
@@ -53,7 +52,7 @@ function request($userid,$jsondata) {
 
 function sendchat($userid,$noidung){
 global $JSON;
-$payload = '{"'.$JSON.'":"'.$noidung.'"}';
+$payload = '{"'.$JSON.'"="'.$noidung.'"}';
 request($userid,$payload);		
 }
 
