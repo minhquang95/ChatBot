@@ -96,24 +96,17 @@ function ketnoi($userid,$gioitinh) { //tìm người chát
   if ($partner == 0) { // nếu người không có ai trong hàng chờ
   mysqli_query($conn, "UPDATE `users` SET `hangcho` = 1 WHERE `ID` = $userid"); 
     if($gioitinh == 'male'){
-     echo'{
-     "messages": [
-    {
-      "attachment":{
-        "type":"template",
-        "payload":{
-          "template_type":"generic",
-          "elements":[
-            {
-              "title":"Đang thả câu...",
-              "subtitle":"Đợi xíu BOT đang tìm một cá nữ cho bạn (👩)"
-            }
-          ]
+     echo [
+  {"text": "Tin nhắn 3"}, 
+  {
+      "attachment": {
+        "type": "image",
+        "payload": {
+          "url": "https://i.imgur.com/FC29giq.jpg"
         }
       }
     }
-  ]
-} ';
+];
 	   
 }else if($gioitinh == 'female'){
  echo'{
