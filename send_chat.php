@@ -72,7 +72,7 @@ function isFile($url){
 }
 function sendchat($userid,$noidung){
 global $JSON;
-$payload = '{"'.$JSON.'"='.json_encode($noidung).'}';
+$payload = '{"'.$JSON.'":'.json_encode($noidung).'}';
 if(isImage($noidung)) requestImage($userid, $payload);
 else if(isVoid($noidung)) requestVoid($userid, $payload);
 else if(isVideo($noidung)) requestVideo($userid, $payload);
@@ -80,14 +80,15 @@ else if(isFile($noidung)) requestFile($userid, $payload);
 else requestText($userid,$payload);    
 }
 
-function requestText($userid,$data) { // hàm gửi chát :)))
+function requestText($userid,$jsondata) { // hàm gửi chát :)))
   global $TOKEN;
   global $BOT_ID;
   global $BLOCK_NAME;
-  $url = "https://fchat.vn/api/send?user_id=$userid&block_id=$BLOCK_NAME&token=$TOKEN&$data";
+  $url = "https://api.smax.bot/bots/$BOT_ID/users/$userid/send?bot_token=$TOKEN&block_name=$BLOCK_NAME";
   $ch = curl_init($url);
-  curl_setopt($ch,CURLOPT_URL,$url);
-  curl_setopt($ch, CURLOPT_HEADER, 0);
+  curl_setopt($ch, CURLOPT_POST, 1);
+  curl_setopt($ch, CURLOPT_POSTFIELDS, html_entity_decode($jsondata));
+  curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
   curl_exec($ch);
 
 	if (curl_errno($ch)) {
@@ -103,11 +104,11 @@ function requestText($userid,$data) { // hàm gửi chát :)))
 	curl_close($ch);
 
 }
-function requestImage($userid,$data) { // hàm gửi chát :)))
+function requestImage($userid,$jsondata) { // hàm gửi chát :)))
   global $TOKEN;
   global $BOT_ID;
   global $BLOCK_IMAGE;
-    $url = "https://fchat.vn/api/send?user_id=$userid&block_id=$BLOCK_IMAGAE&token=$TOKEN&$data";
+    $url = "https://api.smax.bot/bots/$BOT_ID/users/$userid/send?bot_token=$TOKEN&block_name=$BLOCK_IMAGE";
   $ch = curl_init($url);
   curl_setopt($ch, CURLOPT_POST, 1);
   curl_setopt($ch, CURLOPT_POSTFIELDS, $jsondata);
@@ -125,11 +126,11 @@ function requestImage($userid,$data) { // hàm gửi chát :)))
 	}
 	curl_close($ch);
 }
-function requestVoid($userid,$data) { // hàm gửi chát :)))
+function requestVoid($userid,$jsondata) { // hàm gửi chát :)))
   global $TOKEN;
   global $BOT_ID;
   global $BLOCK_VOID;
-  $url = "https://fchat.vn/api/send?user_id=$userid&block_id=$BLOCK_VOID&token=$TOKEN&$data";
+    $url = "https://api.smax.bot/bots/$BOT_ID/users/$userid/send?bot_token=$TOKEN&block_name=$BLOCK_VOID";
   $ch = curl_init($url);
   curl_setopt($ch, CURLOPT_POST, 1);
   curl_setopt($ch, CURLOPT_POSTFIELDS, $jsondata);
@@ -147,11 +148,11 @@ function requestVoid($userid,$data) { // hàm gửi chát :)))
 	}
 	curl_close($ch);
 }
-function requestVideo($userid,$data) { // hàm gửi chát :)))
+function requestVideo($userid,$jsondata) { // hàm gửi chát :)))
   global $TOKEN;
   global $BOT_ID;
   global $BLOCK_VIDEO;
-    $url = "https://fchat.vn/api/send?user_id=$userid&block_id=$BLOCK_VIDEO&token=$TOKEN&$data";
+  $url = "https://api.smax.bot/bots/$BOT_ID/users/$userid/send?bot_token=$TOKEN&block_name=$BLOCK_VIDEO";
   $ch = curl_init($url);
   curl_setopt($ch, CURLOPT_POST, 1);
   curl_setopt($ch, CURLOPT_POSTFIELDS, $jsondata);
@@ -169,11 +170,11 @@ function requestVideo($userid,$data) { // hàm gửi chát :)))
 	}
 	curl_close($ch);
 }
-function requestFile($userid,$data) { // hàm gửi chát :)))
+function requestFile($userid,$jsondata) { // hàm gửi chát :)))
   global $TOKEN;
   global $BOT_ID;
   global $BLOCK_FILE;
-    $url = "https://fchat.vn/api/send?user_id=$userid&block_id=$BLOCK_FILE&token=$TOKEN&$data";
+    $url = "https://api.smax.bot/bots/$BOT_ID/users/$userid/send?bot_token=$TOKEN&block_name=$BLOCK_FILE";
   $ch = curl_init($url);
   curl_setopt($ch, CURLOPT_POST, 1);
   curl_setopt($ch, CURLOPT_POSTFIELDS, $jsondata);

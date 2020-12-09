@@ -7,14 +7,15 @@ require_once 'config.php'; //lấy thông tin từ config
 $conn = mysqli_connect($DBHOST, $DBUSER, $DBPW, $DBNAME); // kết nối data
 ////// Hàm Gửi JSON //////////
 
-function request($userid,$data) { 
+function request($userid,$jsondata) { 
   global $TOKEN;
   global $BOT_ID;
   global $BLOCK_NAME;
-    $url = "https://fchat.vn/api/send?user_id=$userid&block_id=$BLOCK_NAME&token=$TOKEN&$data";
+  $url = "https://api.smax.bot/bots/$BOT_ID/users/$userid/send?bot_token=$TOKEN&block_name=$BLOCK_NAME";
   $ch = curl_init($url);
-  curl_setopt($ch,CURLOPT_URL,$url);
-  curl_setopt($ch, CURLOPT_HEADER, 0);
+  curl_setopt($ch, CURLOPT_POST, 1);
+  curl_setopt($ch, CURLOPT_POSTFIELDS, $jsondata);
+  curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
   curl_exec($ch);
   $errorChat = '{
      "messages": [
@@ -52,7 +53,7 @@ function request($userid,$data) {
 
 function sendchat($userid,$noidung){
 global $JSON;
-$payload = '{"'.$JSON.'"="'.$noidung.'"}';
+$payload = '{"'.$JSON.'":"'.$noidung.'"}';
 request($userid,$payload);		
 }
 
@@ -96,32 +97,44 @@ function ketnoi($userid,$gioitinh) { //tìm người chát
   if ($partner == 0) { // nếu người không có ai trong hàng chờ
   mysqli_query($conn, "UPDATE `users` SET `hangcho` = 1 WHERE `ID` = $userid"); 
     if($gioitinh == 'male'){
-echo ' {
-  "messages": [
+     echo'{
+     "messages": [
     {
-      "attachment": {
-        "type": "image",
-        "payload": {
-          "url": "https://i.imgur.com/FC29giq.jpg"
+      "attachment":{
+        "type":"template",
+        "payload":{
+          "template_type":"generic",
+          "elements":[
+            {
+              "title":"Đang thả câu...",
+              "subtitle":"Đợi xíu BOT đang tìm một cá nữ cho bạn (👩)"
+            }
+          ]
         }
       }
     }
   ]
-}';
+} ';
 	   
 }else if($gioitinh == 'female'){
-echo ' {
-  "messages": [
+ echo'{
+ "messages": [
     {
-      "attachment": {
-        "type": "image",
-        "payload": {
-          "url": "https://i.imgur.com/FC29giq.jpg"
+      "attachment":{
+        "type":"template",
+        "payload":{
+          "template_type":"generic",
+          "elements":[
+            {
+              "title":"Đang thả câu...",
+              "subtitle":"Đợi xíu BOT đang tìm một cá nam cho bạn (👱)"
+            }
+          ]
         }
       }
     }
   ]
-}';
+}  ';
 
 }else{
   echo'{
@@ -184,13 +197,19 @@ if (!trangthai($ID)){// nếu chưa chát
 if (!hangcho($ID)) { // nếu chưa trong hàng chờ
 ketnoi($ID,$gioitinh);
 }else{
-echo ' {
-  "messages": [
+echo'{
+ "messages": [
     {
-      "attachment": {
-        "type": "image",
-        "payload": {
-          "url": "https://i.imgur.com/FC29giq.jpg"
+      "attachment":{
+        "type":"template",
+        "payload":{
+          "template_type":"generic",
+          "elements":[
+            {
+              "title":"Đang thả câu...",
+              "subtitle":"Chưa có cá nào dính thính đâu. Bạn chờ chút nhé! "
+            }
+          ]
         }
       }
     }
@@ -199,13 +218,19 @@ echo ' {
 }
 }else{
 // khi đang chát ! giải quyết sau !!
-echo ' {
-  "messages": [
+echo'{
+ "messages": [
     {
-      "attachment": {
-        "type": "image",
-        "payload": {
-          "url": "https://i.imgur.com/FC29giq.jpg"
+      "attachment":{
+        "type":"template",
+        "payload":{
+          "template_type":"generic",
+          "elements":[
+            {
+              "title":"Cảnh báo",
+              "subtitle":"Bạn đang được kết nối với cá rồi ! Hãy gõ \'End\' để thoát"
+            }
+          ]
         }
       }
     }

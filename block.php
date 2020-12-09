@@ -33,14 +33,15 @@ function getRelationship($userid) {
 }
 
 ////// Hàm Gửi JSON //////////
-function request($userid,$data) { 
+function request($userid,$jsondata) { 
   global $TOKEN;
   global $BOT_ID;
   global $BLOCK_NAME;
-  $url = "https://fchat.vn/api/send?user_id=$userid&block_id=$BLOCK_NAME&token=$TOKEN&$data";
+  $url = "https://api.smax.bot/bots/$BOT_ID/users/$userid/send?bot_token=$TOKEN&block_name=$BLOCK_NAME";
   $ch = curl_init($url);
-  curl_setopt($ch,CURLOPT_URL,$url);
-  curl_setopt($ch, CURLOPT_HEADER, 0);
+  curl_setopt($ch, CURLOPT_POST, 1);
+  curl_setopt($ch, CURLOPT_POSTFIELDS, $jsondata);
+  curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
   curl_exec($ch);
     	if (curl_errno($ch)) {
 		echo errorChat;
@@ -58,13 +59,13 @@ function request($userid,$data) {
 
 function sendchat($userid,$noidung){
 global $JSON;
-$payload = '{"'.$JSON.'"="'.$noidung.'"}';
+$payload = '{"'.$JSON.'":"'.$noidung.'"}';
 request($userid,$payload);		
 }
 
 function endchat($userid,$noidung){
 global $JSON;
-$payload = '{"'.$JSON.'"="'.$noidung.'"&"chat"="off"}';
+$payload = '{"'.$JSON.'":"'.$noidung.'","chat":"off"}';
 request($userid,$payload);		
 }
 
