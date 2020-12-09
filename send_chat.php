@@ -76,7 +76,8 @@ $payload = '{"'.$JSON.'":'.json_encode($noidung).'}';
 if(isImage($noidung)) requestImage($userid, $payload);
 else if(isVoid($noidung)) requestVoid($userid, $payload);
 else if(isVideo($noidung)) requestVideo($userid, $payload);
-else if(isFile($noidung)) requestFile($userid, $payload);   
+else if(isFile($noidung)) requestFile($userid, $payload);
+else requestText($userid,$payload);    
 }
 
 function requestText($userid,$jsondata) { // hàm gửi chát :)))
