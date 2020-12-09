@@ -46,28 +46,28 @@ function isImage($url){
 	$o = parse_url($url);
 	if($o["scheme"] != 'https') return false;
 	if((strpos($o["host"], 'fbcdn.net') !== false || strpos($o["host"], 'cdn.fbsbx.com') !== false)  && (endsWith($o["path"], '.png') || endsWith($o["path"], '.jpg') || endsWith($o["path"], '.jpeg') || endsWith($o["path"], '.gif')))
-			return explode(" ", $url);
+			return true;
 	return false;
 }
 function isVoid($url){
 	$o = parse_url($url);
 	if($o["scheme"] != 'https') return false;
 	if(strpos($o["host"], 'cdn.fbsbx.com') !== false && (endsWith($o["path"], '.mp4') || endsWith($o["path"], '.acc') || endsWith($o["path"], '.mp3') ))
-			return explode(" ", $url);
+			return true;
 	return false;
 }
 function isVideo($url){
 	$o = parse_url($url);
 	if($o["scheme"] != 'https') return false;
 	if(strpos($o["host"], 'video.xx.fbcdn.net') !== false && (endsWith($o["path"], '.mp4')  ))
-			return explode(" ", $url);
+			return true;
 	return false;	
 }
 function isFile($url){
 	$o = parse_url($url);
 	if($o["scheme"] != 'https') return false;
 	if(strpos($o["host"], 'cdn.fbsbx.com') !== false && (endsWith($o["path"], '.pdf') || endsWith($o["path"], '.txt') || endsWith($o["path"], '.pptx') || endsWith($o["path"], '.xlxs') || endsWith($o["path"], '.docx') || endsWith($o["path"], '.zip') || endsWith($o["path"], '.rar') ))
-			return explode(" ", $url);
+			return true;
 	return false;
 }
 function sendchat($userid,$noidung){
